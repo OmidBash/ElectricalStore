@@ -1,0 +1,100 @@
+<form *ngIf="product" [formGroup]="productForm" (ngSubmit)="onSubmitForm()">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-form-field appearance="fill">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Placeholder" type="text" id="title" formControlName="title" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Price</mat-label>
+                <input matInput placeholder="Placeholder" type="number" id="price" formControlName="price" required>
+                <span matPrefix>$&nbsp;</span>
+                <span matSuffix>.00</span>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Placeholder" type="text" id="description" formControlName="description"></textarea>
+            </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+    <mat-divider inset></mat-divider>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Categories</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div formArrayName='categories'>
+                <section *ngFor="let categoryControl of categoryControls; let i= index;" [formGroupName]='i'>
+                    <mat-slide-toggle [id]="'selected'+i" formControlName="selected" #checkCategory (change)="onChangeCategoryToggle($event, i)">
+                        {{ categoryControl.value.title }}
+                    </mat-slide-toggle>
+                </section>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-divider inset></mat-divider>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Features</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <section *ngFor="let featureType of featureTypes;">
+                <mat-checkbox (change)="onChangeFeatureType($event,
+                            featureType.id)" [checked]="hasFeatureType(featureType.id)" #featureTypeCheck>{{ featureType.title }}</mat-checkbox>
+                <ul formArrayName='features'>
+                    <li *ngFor="let featureControl of featureControls; let j=
+                            index;" [formGroupName]='j'>
+                        <div *ngIf="featureType.id === featureControl.value.featureTypeId">
+                            <mat-checkbox (change)="onChangeFeature($event, j)" formControlName="selected" #checkFeature>{{ featureControl.value.title }}</mat-checkbox>
+                            <mat-form-field *ngIf="checkFeature.checked" appearance="fill">
+                                <mat-label>Price</mat-label>
+                                <input matInput placeholder="Placeholder" type="number" [id]="'price'+j" formControlName="price" required>
+                                <span matPrefix>$&nbsp;</span>
+                                <span matSuffix>.00</span>
+                            </mat-form-field>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </mat-card-content>
+    </mat-card>
+    <mat-divider inset></mat-divider>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Categories</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <input type="file" (change)="onAddImage($event)" #imageUpload style="display: none;" accept="image/png, image/jpeg" />
+            <span>
+                <button type="button" mat-raised-button color="primary" (click)="imageUpload.click()">Add Image</button>
+            </span>
+
+            <div class="img-container" formArrayName='imagePaths'>
+                <div *ngFor="let imageControl of imageControls; let i= index;" [formGroupName]='i'>
+                    <img [src]="imageControl.value.image">
+                    <div>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Caption</mat-label>
+                            <input matInput placeholder="Placeholder" type="text" id="caption" formControlName="caption" required>
+                        </mat-form-field>
+                        <button type="button" mat-raised-button color='warn' (click)="onRemoveImage(i)">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <mat-divider inset></mat-divider>
+    <h3 mat-subheader>{{ 'Total Price: ' + (totalPrice | currency) }}</h3>
+    <mat-toolbar-row>
+        <button mat-raised-button color='primary' [disabled]="!productForm.valid" type="submit">{{editMode ?
+                "Save" : "Add"}}</button>
+        <button mat-raised-button color='warn' type="button" (click)="onCancelForm()">Cancel</button>
+        <section *ngIf="progress > 0">
+            <mat-progress-bar color="primary" mode="determinate" [value]="progress">
+            </mat-progress-bar>
+        </section>
+    </mat-toolbar-row>
+</form>

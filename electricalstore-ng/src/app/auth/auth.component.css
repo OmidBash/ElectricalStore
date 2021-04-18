@@ -1,0 +1,12 @@
+form.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(96, 110, 124);
+    margin: 5px;
+    padding: 20px;
+    border: 2px solid white;
+    border-radius: 2%;
+    width: fit-content;
+}

@@ -1,0 +1,19 @@
+<mat-toolbar color="accent" class="navbar">
+    <mat-toolbar-row>
+        <span>E-Store</span>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="isAuthenticated">
+        <div>
+            <span><button mat-raised-button routerLink="/category"
+                    routerLinkActive="mat-primary">Category</button></span>
+            <span><button mat-raised-button routerLink="/feature"
+                        routerLinkActive="mat-primary">Feature</button></span>
+            <span><button mat-raised-button routerLink="/product"
+                                routerLinkActive="mat-primary">Product</button></span>
+        </div>
+        <span class="spacer"></span>
+        <span class="material-icons">
+            <button mat-raised-button (click)="onLogout()"><mat-icon>logout</mat-icon></button>
+        </span>
+    </mat-toolbar-row>
+</mat-toolbar>

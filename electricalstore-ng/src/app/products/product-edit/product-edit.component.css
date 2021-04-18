@@ -1,0 +1,38 @@
+ul {
+    list-style-type: none;
+    margin-top: 4px;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.img-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.img-container>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 2px;
+    border-radius: 5%;
+}
+
+.img-container img {
+    height: 140px;
+    width: 210px;
+    padding: 2px;
+    border-radius: 5%;
+}
+
+.item {
+    margin: 10px;
+}

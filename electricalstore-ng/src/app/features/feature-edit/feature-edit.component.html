@@ -1,0 +1,41 @@
+<form *ngIf="featureType" [formGroup]="featureTypeForm" (ngSubmit)="onSubmitForm()">
+    <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Placeholder" type="text" id="title" formControlName="title" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Placeholder" type="text" id="description" formControlName="description"></textarea>
+    </mat-form-field>
+    <form #addFeatureForm="ngForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Title</mat-label>
+            <input matInput placeholder="Placeholder" type="text" id="add_title" ngModel name="add_title" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Description</mat-label>
+            <textarea matInput placeholder="Placeholder" type="text" id="add_description" ngModel name="add_description"></textarea>
+        </mat-form-field>
+        <span><button type="button" [disabled]="!addFeatureForm.valid" mat-raised-button
+                            (click)="onAddFeature(addFeatureForm)">Add</button></span>
+    </form>
+    <div formArrayName='features'>
+        <div *ngFor="let featureItem of featureControls; let i= index;" [formGroupName]='i'>
+            <input type="hidden" [id]="'featureTypeId'+i" formControlName="featureTypeId">
+            <mat-form-field appearance="fill">
+                <mat-label>Title</mat-label>
+                <input matInput placeholder="Placeholder" type="text" [id]="'title'+i" formControlName="title" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Description</mat-label>
+                <textarea matInput placeholder="Placeholder" type="text" [id]="'description'+i" formControlName="description"></textarea>
+            </mat-form-field>
+            <button type="button" mat-raised-button color='warn' (click)="onRemoveFeature(i)">Remove</button>
+        </div>
+    </div>
+    <mat-toolbar-row>
+        <button mat-raised-button color='primary' [disabled]="!featureTypeForm.valid" type="submit">{{editMode ?
+                "Save" : "Add"}}</button>
+        <button mat-raised-button color='warn' type="button" (click)="onCancelForm()">Cancel</button>
+    </mat-toolbar-row>
+</form>

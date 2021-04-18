@@ -1,0 +1,13 @@
+<mat-card>
+    <mat-card-title>
+        {{ featureType.title }}
+    </mat-card-title>
+    <mat-card-content>
+        {{ featureType.description }}
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-raised-button color="primary" [routerLink]="[featureType.id]">Edit</button>
+        <button mat-raised-button color="warn" (click)="onRemove(featureType.id)">Remove</button>
+    </mat-card-actions>
+</mat-card>
+<mat-divider inset></mat-divider>

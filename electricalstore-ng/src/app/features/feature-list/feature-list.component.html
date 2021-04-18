@@ -1,0 +1,8 @@
+<div class="list-header">
+    <h3 mat-subheader>Features</h3>
+    <button mat-raised-button color="accent" (click)="onClickAdd()">Add</button>
+</div>
+<mat-list>
+    <app-feature-type-item *ngFor="let featureTypeItem of featureTypes" [featureType]="featureTypeItem"></app-feature-type-item>
+    <mat-paginator [length]="totalCount" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25]" (page)="pageEvent= onPageChanged($event)"></mat-paginator>
+</mat-list>

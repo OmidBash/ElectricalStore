@@ -1,0 +1,15 @@
+<form #editForm="ngForm" (ngSubmit)="onSubmitForm()">
+    <input type="hidden" id="id" name="id" [ngModel]="category.id">
+    <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput placeholder="Placeholder" type="text" id="title" required [(ngModel)]="category.title" name="title">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Placeholder" type="text" id="description" [(ngModel)]="category.description" name="description"></textarea>
+    </mat-form-field>
+    <mat-toolbar-row>
+        <button mat-raised-button color='primary' [disabled]="!editForm.form.valid" type="submit">{{editMode ? "Save" : "Add"}}</button>
+        <button mat-raised-button color='warn' type="button" (click)="onCancelForm()">Cancel</button>
+    </mat-toolbar-row>
+</form>

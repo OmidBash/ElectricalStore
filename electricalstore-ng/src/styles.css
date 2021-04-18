@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background-color: slategray;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.items {
+    background-color: rgb(96, 110, 124);
+    justify-self: flex-start;
+    align-self: flex-start;
+}
+
+.editor {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-self: stretch;
+    background-color: rgb(96, 110, 124);
+    margin: 5px;
+    padding: 5px;
+    flex-grow: 1;
+}
+
+mat-form-field {
+    margin: 1rem;
+}
+
+div.list-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+div.list-header>h3 {
+    text-align: center;
+}
+
+div.list-header>button {
+    position: absolute;
+    right: 0;
+    margin: 10px;
+}
