@@ -41,10 +41,7 @@ export class ProductEditResolverService implements Resolve<IProductEditor> {
                     .pipe(
                         map(data => product = data),
                     ),
-                this.categoryService.getCategories(pageReq)
-                    .pipe(
-                        map(pageData => categories.push(...pageData.data))
-                    ),
+                this.categoryService.getCategories(pageReq).then(pageData => categories.push(...pageData.data)),
                 this.featureTypeService.getFeatureTypes(pageReq)
                     .pipe(
                         map(pageData => featureTypes.push(...pageData.data))
@@ -61,10 +58,7 @@ export class ProductEditResolverService implements Resolve<IProductEditor> {
                 );
         } else {
             return forkJoin([
-                this.categoryService.getCategories(pageReq)
-                    .pipe(
-                        map(pageData => categories.push(...pageData.data))
-                    ),
+                this.categoryService.getCategories(pageReq).then(pageData => categories.push(...pageData.data)),
                 this.featureTypeService.getFeatureTypes(pageReq)
                     .pipe(
                         map(pageData => featureTypes.push(...pageData.data))

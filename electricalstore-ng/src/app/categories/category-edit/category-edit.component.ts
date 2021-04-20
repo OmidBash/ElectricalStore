@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../category.model';
 import { CategoryService } from '../category.service';
 
@@ -17,7 +17,10 @@ export class CategoryEditComponent implements OnInit {
   editMode = false;
   @ViewChild('editForm', { static: false }) editForm: NgForm;
 
-  constructor(private router: Router, private route: ActivatedRoute, private categoryService: CategoryService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.route.data.subscribe((category: Category) => {
@@ -25,23 +28,21 @@ export class CategoryEditComponent implements OnInit {
       this.editMode = this.category.id !== undefined;
     });
   }
-
   onSubmitForm() {
     if (this.editMode) {
-      this.categoryService.updateCategory(this.editForm.form.value).subscribe(
+      this.categoryService.updateCategory(this.editForm.form.value).then(
         () => {
+          this.categoryService.getCategories();
           this.reset();
-          this.categoryService.categoriesChangedSub.next();
         },
         error => {
           console.log(error);
-        }
-      );
+        });
     } else {
-      this.categoryService.addCategory(this.editForm.form.value).subscribe(
+      this.categoryService.addCategory(this.editForm.form.value).then(
         () => {
+          this.categoryService.getCategories();
           this.reset();
-          this.categoryService.categoriesChangedSub.next();
         },
         error => {
           console.log(error);

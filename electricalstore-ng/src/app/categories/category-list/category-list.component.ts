@@ -24,25 +24,15 @@ export class CategoryListComponent implements OnInit {
     this.route.data.subscribe((pageData: PaginationResponse) => {
       this.categories = pageData[0].data;
       this.totalCount = pageData[0].length;
-    });
-  }
-
-  getPageData(pageRequest?: PaginationRequest) {
-    if (pageRequest === undefined) {
-      this.pageIndex = 1;
-      pageRequest = new PaginationRequest(String(this.pageIndex), String(this.pageSize));
-    }
-
-    this.categoryService.getCategoriesCount().subscribe(count => {
-      this.totalCount = count;
     },
       error => {
         console.log(error);
       }
     );
 
-    this.categoryService.getCategories(pageRequest).subscribe(paginationData => {
-      this.categories = paginationData.data;
+    this.categoryService.categoriesChangedSub.subscribe((pageData: PaginationResponse) => {
+      this.categories = pageData.data;
+      this.totalCount = pageData.length;
     },
       error => {
         console.log(error);
@@ -52,7 +42,7 @@ export class CategoryListComponent implements OnInit {
 
   onPageChanged(pageEvent?: PageEvent) {
     const pageRequest = new PaginationRequest(String(++pageEvent.pageIndex), String(pageEvent.pageSize));
-    this.getPageData(pageRequest);
+    this.categoryService.getCategories(pageRequest);
   }
 
   onClickAdd() {
